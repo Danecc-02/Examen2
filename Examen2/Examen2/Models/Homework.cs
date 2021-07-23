@@ -18,15 +18,20 @@ namespace Examen2.Models
         [MinLength(2, ErrorMessage = "Debe de tener mas de 2 caracteres")]
         public string Description { get; set; }
 
-        
         [Display(Name = "Prioridad")]
-        public string Priority { get; set; }
+        public int IdPriority { get; set; }
 
+        [ForeignKey("IdPriority")]
+
+       
+        public Priority Priority { get; set; }
+
+        [Display(Name = "Categoria")]
         public int IdCategory { get; set; }
 
         [ForeignKey("IdCategory")]
        
-        [Display(Name = "Categoria")]
+        
         public Category Category { get; set; }
 
         [DataType(DataType.Date)]
@@ -38,8 +43,5 @@ namespace Examen2.Models
         [Display(Name = "Fecha limite")]
         
         public DateTime FinishDate { get; set; }
-
-
-
     }
 }

@@ -22,6 +22,10 @@ namespace Examen2.Controllers
         {
             return View();
         }
+        public IActionResult TaskList()
+        {
+            return View();
+        }
 
         public IActionResult Privacy()
         {

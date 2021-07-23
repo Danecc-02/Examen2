@@ -1,0 +1,72 @@
+﻿.clase1 {
+    background-color: #007acc;
+    border-color: black;
+}
+.clase2 {
+    font-family: 'Arial Rounded MT';
+    font-size: 50px;
+    position: center;
+    margin-left: 370px;
+    margin-top: -18px;
+}
+.table {
+    font-family: 'Arial Rounded MT';
+    font-size: 15px;
+    background-color: #3e3e42;
+    border-color: black;
+    
+}
+
+#c2 input:checked ~ .checkmark {
+background-color: green;
+}
+.container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: -6px;
+  left: 35px;
+  height: 35px;
+  width: 35px;
+  background-color: #eee;
+}
+
+.container:hover input ~ .checkmark {
+  background-color: darkgrey;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.container .checkmark:after {
+    left: 12px;
+    top: 7px;
+    width: 10px;
+    height: 20px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

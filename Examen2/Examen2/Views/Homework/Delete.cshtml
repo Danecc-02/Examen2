@@ -21,8 +21,8 @@
             @Html.DisplayNameFor(model => model.Priority)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Priority)
-        </dd>
+            @Html.DisplayFor(model => model.Priority.PriorityDescription)
+        </dd class>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Category)
         </dt>
@@ -45,7 +45,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="IdHomework" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <input type="submit" class="btn btn-outline-danger" value="Borrar" />
+        <a asp-action="Index" class="btn btn-outline-success"><i class="fas fa-arrow-circle-left"></i> Regresar</a>
     </form>
 </div>

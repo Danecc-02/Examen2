@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Examen2.Data;
 using Examen2.Models;
+using Examen2.Common;
 
 namespace Examen2.Controllers
 {
@@ -20,9 +21,44 @@ namespace Examen2.Controllers
         }
 
         // GET: Categories
-        public async Task<IActionResult> Index()
+        private readonly int RecordsPerPages = 10;
+
+        private Pagination<Category> PaginationCategories;
+        public async Task<IActionResult> Index(string search, int page = 1)
         {
-            return View(await _context.Categories.ToListAsync());
+            int totalRecords = 0;
+
+
+
+            if (search == null)
+            {
+                search = "";
+            }
+            totalRecords = await _context.Categories.CountAsync(
+                    d => d.NameCategory.Contains(search));
+
+            //Obtener datos
+
+            var category = await _context.Categories.Where(d => d.NameCategory.Contains(search)).ToListAsync();
+
+            var CategoryResult = category.OrderBy(o => o.NameCategory)
+                .Skip((page - 1) * RecordsPerPages).Take(RecordsPerPages);//Obtener el total de paginas
+            var totalPages = (int)Math.Ceiling((double)totalRecords / RecordsPerPages);
+
+            //Instanciar la clase depaginación
+
+
+            PaginationCategories = new Pagination<Category>()
+            {
+                RecordsPerPage = this.RecordsPerPages,
+                TotalRecords = totalRecords,
+                TotalPages = totalPages,
+                CurrentPage = page,
+                Search = search,
+                Result = CategoryResult
+            };
+
+            return View(PaginationCategories);
         }
 
         // GET: Categories/Details/5

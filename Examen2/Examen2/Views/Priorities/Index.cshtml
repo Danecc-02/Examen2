@@ -1,0 +1,104 @@
+﻿@model Examen2.Common.Pagination<Priority>
+@{
+    ViewData["Tittle"] = "Prioridades";
+}
+
+<h2>Lista de Prioridades</h2>
+<br />
+<div class="row">
+    <div class="col-auto">
+        <input type="text" class="form-control-plaintext" id="txt-search" placeholder="Buscar....." />
+    </div>
+    <div class="col-auto">
+        <a class="btn btn-outline-success" onclick="homeworks_search()" id="search-link">Buscar</a>
+        <a asp-action="Create" class="btn btn-outline-info"><i class="fas fa-plus-square"></i> Nuevo</a>
+    </div>
+</div>
+
+<br />
+
+
+<div class="table-responsive">
+    <table class="table table-success table-bordered table-hover table-striped">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Result.SingleOrDefault().PriorityDescription)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Result)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.PriorityDescription)</td>
+                    <td>
+                        
+                        <a asp-action="Details" class="btn btn-outline-success" asp-route-id="@item.IdPriority"><i class="fas fa-info"></i> Detalles</a>
+                       
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@*Codigo para paginar registros*@
+
+@if (Model.Result.Count() > 0)
+{
+    <span>
+        <strong>@Model.TotalRecords</strong> Registros Encontrados
+    </span>
+    <span>  |   </span>
+    <span>
+        Pagina<strong>@Model.CurrentPage</strong>  de
+        <strong>@Model.TotalPages</strong>
+    </span>
+    <span>  |   </span>
+}
+else
+{
+    <span>  |   </span>
+    <span>No hay Resultados para esta busqueda</span>
+    <span>  |   </span>
+}
+
+@if (Model.CurrentPage > 1)
+{
+    @Html.ActionLink("<<", "Index", new { Page = 1, Search = Model.Search },
+    new { @class = "btn btn-sm btn-default" })
+    <span></span>
+    @Html.ActionLink("Anterior", "Index", new { Page = Model.CurrentPage - 1, Search = Model.Search },
+    new { @class = "btn btn-sm btn-default" })
+}
+else
+{
+    @Html.ActionLink("<<", "Index", new { Page = 1, Search = Model.Search },
+    new { @class = "btn btn-sm btn-default disabled" })
+    <span></span>
+    @Html.ActionLink("Anterior", "Index", new { Page = 1, Search = Model.Search },
+    new { @class = "btn btn-sm btn-default disabled" })
+}
+
+<span></span>
+@if (Model.CurrentPage < Model.TotalPages)
+{
+    @Html.ActionLink("Siguiente", "Index", new { Page = Model.CurrentPage + 1, Search = Model.Search },
+    new { @class = "btn btn-sm btn-default" })
+    <span></span>
+    @Html.ActionLink(">>", "Index", new { Page = Model.TotalPages, Search = Model.Search },
+    new { @class = "btn btn-sm btn-default" })
+}
+else
+{
+    @Html.ActionLink("Siguiente", "Index", new { Page = Model.CurrentPage - 1, Search = Model.Search },
+   new { @class = "btn btn-sm btn-default disabled" })
+    <span></span>
+    @Html.ActionLink(">>", "Index", new { Page = Model.TotalPages, Search = Model.Search },
+    new { @class = "btn btn-sm btn-default disabled" })
+}
+<script src="~/js/Home.js" asp-append-version="true"></script>
+

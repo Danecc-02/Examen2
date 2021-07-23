@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Examen2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210723051011_pruebafechaa")]
-    partial class pruebafechaa
+    [Migration("20210723205557_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -56,9 +56,8 @@ namespace Examen2.Migrations
                     b.Property<int>("IdCategory")
                         .HasColumnType("int");
 
-                    b.Property<string>("Priority")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("IdPriority")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -67,7 +66,26 @@ namespace Examen2.Migrations
 
                     b.HasIndex("IdCategory");
 
+                    b.HasIndex("IdPriority");
+
                     b.ToTable("Homeworks");
+                });
+
+            modelBuilder.Entity("Examen2.Models.Priority", b =>
+                {
+                    b.Property<int>("IdPriority")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("PriorityDescription")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("IdPriority");
+
+                    b.ToTable("Priority");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -278,7 +296,15 @@ namespace Examen2.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Examen2.Models.Priority", "Priority")
+                        .WithMany("Homeworks")
+                        .HasForeignKey("IdPriority")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("Priority");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -333,6 +359,11 @@ namespace Examen2.Migrations
                 });
 
             modelBuilder.Entity("Examen2.Models.Category", b =>
+                {
+                    b.Navigation("Homeworks");
+                });
+
+            modelBuilder.Entity("Examen2.Models.Priority", b =>
                 {
                     b.Navigation("Homeworks");
                 });

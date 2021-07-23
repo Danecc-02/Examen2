@@ -1,0 +1,26 @@
+﻿@model Examen2.Models.Priority
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Priority</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PriorityDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PriorityDescription)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" class="btn btn-outline-dark" asp-route-id="@Model.IdPriority"><i class="fas fa-pen"></i> Editar</a>
+
+    <a asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@Model.IdPriority"><i class="fas fa-trash-alt"></i> Eliminar</a>
+    <a asp-action="Index" class="btn btn-outline-success"><i class="fas fa-arrow-circle-left"></i> Regresar</a>
+</div>

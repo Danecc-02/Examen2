@@ -17,5 +17,6 @@ namespace Examen2.Data
 
         public DbSet<Homework> Homeworks { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Examen2.Models.Priority> Priority { get; set; }
     }
 }

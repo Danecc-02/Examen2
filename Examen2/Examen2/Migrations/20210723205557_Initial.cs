@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Examen2.Migrations
 {
-    public partial class initiaaaal : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -57,6 +57,19 @@ namespace Examen2.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.IdCategory);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Priority",
+                columns: table => new
+                {
+                    IdPriority = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PriorityDescription = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Priority", x => x.IdPriority);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,7 +185,7 @@ namespace Examen2.Migrations
                     IdHomework = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Description = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
-                    Priority = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IdPriority = table.Column<int>(type: "int", nullable: false),
                     IdCategory = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FinishDate = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -185,6 +198,12 @@ namespace Examen2.Migrations
                         column: x => x.IdCategory,
                         principalTable: "Categories",
                         principalColumn: "IdCategory",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Homeworks_Priority_IdPriority",
+                        column: x => x.IdPriority,
+                        principalTable: "Priority",
+                        principalColumn: "IdPriority",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -231,6 +250,11 @@ namespace Examen2.Migrations
                 name: "IX_Homeworks_IdCategory",
                 table: "Homeworks",
                 column: "IdCategory");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Homeworks_IdPriority",
+                table: "Homeworks",
+                column: "IdPriority");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -261,6 +285,9 @@ namespace Examen2.Migrations
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Priority");
         }
     }
 }
